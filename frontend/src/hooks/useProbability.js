@@ -1,6 +1,6 @@
 // hook to communicate with backend
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { modelResult } from "../services/review";
 
 export function useProbability({ review }) {
@@ -8,10 +8,17 @@ export function useProbability({ review }) {
     const [result, setResult] = useState('')
     const [error, setError] = useState(null)
 
+    const previousReview = useRef(review)
+
     const getReviewResult = useCallback(async ({ review }) => {
+
+        if (previousReview.current === review) return
+
         try {
             setLoading(true)
+            previousReview.current = review
             const newResults = await modelResult({ review })
+            console.log(newResults)
             setResult(newResults)
             setError(null)
         } catch (e) {
@@ -21,8 +28,8 @@ export function useProbability({ review }) {
         } finally {
             setLoading(false)
         }
-    })
+    }, [])
     
-    return { loading, getReviewResult, error }
+    return { loading, getReviewResult, error, result }
 
 }
