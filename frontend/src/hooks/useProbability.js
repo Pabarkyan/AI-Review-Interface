@@ -5,7 +5,7 @@ import { modelResult } from "../services/review";
 
 export function useProbability({ review }) {
     const [loading, setLoading] = useState(false)
-    const [result, setResult] = useState('')
+    const [result, setResult] = useState(0)
     const [error, setError] = useState(null)
 
     const previousReview = useRef(review)
@@ -16,9 +16,8 @@ export function useProbability({ review }) {
 
         try {
             setLoading(true)
-            previousReview.current = review
+            previousReview.current = review === ''
             const newResults = await modelResult({ review })
-            console.log(newResults)
             setResult(newResults)
             setError(null)
         } catch (e) {
@@ -30,6 +29,6 @@ export function useProbability({ review }) {
         }
     }, [])
     
-    return { loading, getReviewResult, error, result }
+    return { loading, getReviewResult, error, result, setResult }
 
 }

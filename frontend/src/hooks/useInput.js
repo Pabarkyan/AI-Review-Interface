@@ -7,6 +7,12 @@ export function useInput() {
     const [inputError, setInputError] = useState(null)
     const isInitialInput = useRef(true)
 
+    const handleRefresh = () => {
+        setReview('')
+        setInputError(null)
+        isInitialInput.current = true
+    }
+
     useEffect(() => {
         if (isInitialInput.current) {
             isInitialInput.current = review === ''
@@ -34,5 +40,5 @@ export function useInput() {
         setInputError(null)
     }, [review])
 
-    return { review, setReview, inputError }
+    return { review, setReview, inputError, handleRefresh }
 }

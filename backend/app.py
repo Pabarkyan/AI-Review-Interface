@@ -25,7 +25,7 @@ def predict_prob():
         probability_ia = ai_guess(review=review) # obtenemos la prediccion en porcentaje
 
         return jsonify({ # lo ponemos en forma de diccionario porque podria ser util añadir mas datos en el return (en un futuro)
-            'probability': f'{probability_ia}% de ser ia',
+            'probability': round(probability_ia, 2), # Porcentaje de ser escrita por una ia
         })
 
     except Exception as e:

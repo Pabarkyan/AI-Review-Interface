@@ -1,6 +1,8 @@
+import { backendUrl } from "../config"
+
 export const modelResult = async ({ review }) => {
     try {
-        const response = await fetch('http://localhost:5000/api/predict', {
+        const response = await fetch(backendUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
